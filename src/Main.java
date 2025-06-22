@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Main {
@@ -21,4 +22,25 @@ public class Main {
 
         return maxlen;
     }
+
+    public int LongestSubstringKDistinctChar(String s) {
+        HashMap<Character, Integer> set = new HashMap<>();
+        int maxlen = 0;
+        int left =  0;
+
+        for (int right = 0; right < s.length(); right++) {
+            set.put(s.charAt(right), set.getOrDefault(s.charAt(right), 0) + 1);
+            while (set.size() > 2) {
+                set.put(s.charAt(left), set.get(s.charAt(left)) - 1);
+                if (set.getOrDefault(s.charAt(left), -1) == 0) {
+                    set.remove(s.charAt(left));
+                }
+                left++;
+            }
+            maxlen = Math.max(maxlen, right - left +1);
+        }
+
+        return maxlen;
+    }
+
 }
